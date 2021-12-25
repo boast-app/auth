@@ -3,6 +3,7 @@ import {
   Routes,
   Route
 } from "react-router-dom"
+import Private from "./components/Private"
 import App from "./App"
 import About from "./pages/About"
 import Register from "./pages/Register"
@@ -14,7 +15,9 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="about" element={<About />} />
+          <Route element={<Private />}>
+            <Route path="about" element={<About />} />
+          </Route>
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route index element={<Index />} />
