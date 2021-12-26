@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require("../models/user.model")
 
 const admin = require("firebase-admin")
-const serviceAccount = require("./firebase_key.json")
+const serviceAccount = require("../firebase_key.json")
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 })
