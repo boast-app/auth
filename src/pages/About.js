@@ -1,9 +1,12 @@
 import { useAuthContext } from "../context/authContext"
 import firebase from "../plugins/firebase"
 import "firebase/auth"
+import axios from "axios"
+import { useState } from "react"
 
 const About = () => {
   const { user } = useAuthContext()
+  const [message, setMessage] = useState("認証ボタンをクリックして認証を確認してください")
 
   const handleOnLogout = () => {
     firebase.auth().signOut()
@@ -11,8 +14,17 @@ const About = () => {
 
   const handleOnToken = () => {
     firebase.auth().currentUser.getIdToken(true)
-      .then((idToken) => {
-        console.log(idToken)
+      .then(idToken => {
+        axios.post("http://localhost:5001/user/verify", {
+          token: idToken
+        })
+          .then(res => {
+            if(res.data.ok) {
+              setMessage(`${res.data.data.email}として正常に認証されています`)
+            } else {
+              setMessage(`${res.data.message}が原因で正常な認証が行われていません`)
+            }
+          })
       })
   }
 
@@ -23,8 +35,7 @@ const About = () => {
       <p>{user===null ? "" : user.email}</p>
       <button onClick={handleOnLogout}>ログアウト</button>
       <div>
-        <h3>TOKENを認証する</h3>
-        <button onClick={handleOnToken}>Here!</button>
+        <button onClick={handleOnToken}>{message===""  ? "" : message}</button>
       </div>
     </div>
   )
