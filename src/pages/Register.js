@@ -17,10 +17,11 @@ const Register = () => {
   const handleOnSubmit = () => {
     setDis(true)
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((userCredential) => {
         axios.post("http://localhost:5001/user", {
           email: email,
-          name: name
+          name: name,
+          uid: userCredential.user.uid
         })
           .then((res) => {
             setMessage("")

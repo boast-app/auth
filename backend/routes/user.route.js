@@ -23,10 +23,11 @@ router.post("/verify", (req, res) => {
 router.post("/", async (req, res) => {
   const {
     email,
-    name
+    name,
+    uid
   } = req.body
 
-  if(!email || !name) {
+  if(!email || !name || !uid) {
     res.status(400).json({
       ok: false,
       message: "user/lack-parmas"
@@ -34,7 +35,8 @@ router.post("/", async (req, res) => {
   } else {
     const user = new User({
       email: email,
-      name: name
+      name: name,
+      uid, uid
     })
 
     try {
