@@ -20,7 +20,7 @@ router.post("/verify", (req, res) => {
     })
 })
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const {
     email,
     name
@@ -32,10 +32,23 @@ router.post("/", (req, res) => {
       message: "user/lack-parmas"
     })
   } else {
-    console.log(email, name)
-    res.status(200).json({
-      ok: true
+    const user = new User({
+      email: email,
+      name: name
     })
+
+    try {
+      const newUser = await user.save()
+      res.status(201).json({
+        ok: true,
+        data: newUser
+      })
+    } catch (err) {
+      res.status(400).json({
+        ok: false,
+        message: err.message
+      })
+    }
   }
 })
 
