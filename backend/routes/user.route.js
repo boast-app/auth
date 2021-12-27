@@ -20,4 +20,23 @@ router.post("/verify", (req, res) => {
     })
 })
 
+router.post("/", (req, res) => {
+  const {
+    email,
+    name
+  } = req.body
+
+  if(!email || !name) {
+    res.status(400).json({
+      ok: false,
+      message: "user/lack-parmas"
+    })
+  } else {
+    console.log(email, name)
+    res.status(200).json({
+      ok: true
+    })
+  }
+})
+
 module.exports = router

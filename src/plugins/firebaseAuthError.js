@@ -15,6 +15,9 @@ const errors = (code) => {
     case "auth/wrong-password":
       return "メールアドレスまたはパスワードが違います"
 
+    case "user/lack-parmas":
+      return "空欄があります"
+
     default:
       return "作成に失敗しました。原因は不明です"
   }

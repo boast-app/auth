@@ -3,10 +3,12 @@ import firebase from "../plugins/firebase"
 import "firebase/auth"
 import { useNavigate } from "react-router-dom"
 import errors from "../plugins/firebaseAuthError"
+import axios from "axios"
 
 const Register = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [name, setName] = useState("")
   const [dis, setDis] = useState(false)
   const [message, setMessage] = useState("")
 
@@ -16,16 +18,28 @@ const Register = () => {
     setDis(true)
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        setMessage("")
-        setEmail("")
-        setPassword("")
-        setDis(false)
-        navigate("/")
+        axios.post("http://localhost:5001/user", {
+          email: email,
+          name: name
+        })
+          .then((res) => {
+            setMessage("")
+            setEmail("")
+            setPassword("")
+            setName("")
+            setDis(false)
+            navigate("/")
+          })
+          .catch((err) => {
+            setMessage(erorrs(err.response.data.message))
+            setDis(false)
+          })
       })
       .catch((err) => {
         setMessage(errors(err.code))
         setDis(false)
       })
+    setDis(false)
   }
 
   return(
@@ -35,6 +49,7 @@ const Register = () => {
         <p>{message=="" ? "" : message}</p>
         <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
         <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
+        <input type="text" placeholder="UserName" onChange={(e) => setName(e.target.value)} value={name} />
         <button onClick={handleOnSubmit} disabled={dis}>登録</button>
       </div>
     </div>

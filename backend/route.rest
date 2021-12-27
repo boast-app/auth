@@ -20,3 +20,21 @@ Content-Type: application/json
 {
   "token": "adsfasdfasdf"
 }
+
+###
+POST http://localhost:5001/user
+Content-Type: application/json
+
+{
+  "email": "ysolakey1116@gmail.com",
+  "name": "Tani"
+}
+
+###
+POST http://localhost:5001/user
+Content-Type: application/json
+
+{
+  "email": "a",
+  "name": ""
+}
