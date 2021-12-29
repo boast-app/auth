@@ -3,7 +3,7 @@ import firebase from "../plugins/firebase"
 import "firebase/auth"
 import { useNavigate } from "react-router-dom"
 import errors from "../plugins/firebaseAuthError"
-import axios from "axios"
+import axios from "../plugins/axios"
 
 const Register = () => {
   const [email, setEmail] = useState("")
@@ -17,21 +17,22 @@ const Register = () => {
 
   const handleOnSubmit = () => {
     setDis(true)
+    setMessage("")
+    if (!email || !password || !name || !introduction) {
+      setMessage("空欄があります")
+      setDis(false)
+      return 0
+    }
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        axios.post("http://localhost:5001/user", {
+        axios.post("user", {
           email: email,
           name: name,
           uid: userCredential.user.uid,
           introduction: introduction
         })
           .then((res) => {
-            setMessage("")
-            setEmail("")
-            setPassword("")
-            setName("")
             setDis(false)
-            setIntroduction("")
             navigate("/")
           })
           .catch((err) => {
@@ -51,10 +52,42 @@ const Register = () => {
       <h2>新規登録</h2>
       <div>
         <p>{message=="" ? "" : message}</p>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
-        <input type="text" placeholder="UserName" onChange={(e) => setName(e.target.value)} value={name} />
-        <textarea placeholder="Introduction" onChange={(e) => setIntroduction(e.target.value)} value={introduction}></textarea>
+
+        <div>
+          <input 
+            type="email" 
+            placeholder="Email" 
+            onChange={(e) => setEmail(e.target.value)} 
+            value={email} 
+          />
+        </div>
+
+        <div>
+          <input 
+            type="password" 
+            placeholder="Password" 
+            onChange={(e) => setPassword(e.target.value)} 
+            value={password} 
+          />
+        </div>
+
+        <div>
+          <input 
+            type="text" 
+            placeholder="UserName" 
+            onChange={(e) => setName(e.target.value)} 
+            value={name} 
+          />
+        </div>
+
+        <div>
+          <textarea 
+            placeholder="Introduction" 
+            onChange={(e) => setIntroduction(e.target.value)} 
+            value={introduction}
+          ></textarea>
+        </div>
+
         <button onClick={handleOnSubmit} disabled={dis}>登録</button>
       </div>
     </div>

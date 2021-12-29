@@ -11,6 +11,14 @@ import Login from "./pages/Login"
 import Index from "./pages/Index"
 import User from "./pages/User"
 
+const Use = () => {
+  return(
+    <div>
+      <h2>UserMyPage</h2>
+    </div>
+  )
+}
+
 const Router = () => {
   return(
     <BrowserRouter>
@@ -23,6 +31,7 @@ const Router = () => {
           <Route path="login" element={<Login />} />
           <Route path="user">
             <Route path=":id" element={<User />} />
+            <Route index element={<Use />} />
           </Route>
           <Route index element={<Index />} />
         </Route>

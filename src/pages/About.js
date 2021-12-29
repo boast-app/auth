@@ -1,7 +1,7 @@
 import { useAuthContext } from "../context/authContext"
 import firebase from "../plugins/firebase"
 import "firebase/auth"
-import axios from "axios"
+import axios from "../plugins/axios"
 import { useState } from "react"
 
 const About = () => {
@@ -15,7 +15,7 @@ const About = () => {
   const handleOnToken = () => {
     firebase.auth().currentUser.getIdToken(true)
       .then(idToken => {
-        axios.post("http://localhost:5001/user/verify", {
+        axios.post("user/verify", {
           token: idToken
         })
           .then(res => {

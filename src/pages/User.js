@@ -1,5 +1,5 @@
 import { useParams } from "react-router"
-import axios from "axios"
+import axios from "../plugins/axios"
 import { useState, useEffect } from "react"
 
 const User = () => {
@@ -7,7 +7,7 @@ const User = () => {
   const [user, setUser] = useState({})
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/user/${id}`)
+    axios.get(`user/${id}`)
       .then((res) => {
         setUser(res.data.data)
         console.log(res.data.data)

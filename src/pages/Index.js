@@ -1,11 +1,11 @@
-import axios from "axios"
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import axios from "../plugins/axios"
 
 const Index = () => {
   const [users, setUsers] = useState([])
   useEffect(() => {
-    axios.get("http://localhost:5001/user")
+    axios.get("user")
       .then((res) => {
         setUsers(res.data.data)
       })
@@ -20,7 +20,8 @@ const Index = () => {
         {users.map((user) => {
           return(
             <div key={user._id}>
-              <Link to={`/user/${user._id}`}>{user.name}</Link>            </div>
+              <Link to={`/user/${user._id}`}>{user.name}</Link>          
+            </div>
           )
         })}
       </div>
