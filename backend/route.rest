@@ -38,3 +38,9 @@ Content-Type: application/json
   "email": "a",
   "name": ""
 }
+
+###
+GET http://localhost:5001/user
+
+###
+GET http://localhost:5001/user/61cbad5651764b4e177c63d8

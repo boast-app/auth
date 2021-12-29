@@ -11,6 +11,7 @@ const Register = () => {
   const [name, setName] = useState("")
   const [dis, setDis] = useState(false)
   const [message, setMessage] = useState("")
+  const [introduction, setIntroduction] = useState("")
 
   let navigate = useNavigate()
 
@@ -21,7 +22,8 @@ const Register = () => {
         axios.post("http://localhost:5001/user", {
           email: email,
           name: name,
-          uid: userCredential.user.uid
+          uid: userCredential.user.uid,
+          introduction: introduction
         })
           .then((res) => {
             setMessage("")
@@ -29,6 +31,7 @@ const Register = () => {
             setPassword("")
             setName("")
             setDis(false)
+            setIntroduction("")
             navigate("/")
           })
           .catch((err) => {
@@ -51,6 +54,7 @@ const Register = () => {
         <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
         <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
         <input type="text" placeholder="UserName" onChange={(e) => setName(e.target.value)} value={name} />
+        <textarea placeholder="Introduction" onChange={(e) => setIntroduction(e.target.value)} value={introduction}></textarea>
         <button onClick={handleOnSubmit} disabled={dis}>登録</button>
       </div>
     </div>

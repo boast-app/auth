@@ -9,6 +9,7 @@ import About from "./pages/About"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Index from "./pages/Index"
+import User from "./pages/User"
 
 const Router = () => {
   return(
@@ -20,6 +21,9 @@ const Router = () => {
           </Route>
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="user">
+            <Route path=":id" element={<User />} />
+          </Route>
           <Route index element={<Index />} />
         </Route>
       </Routes>

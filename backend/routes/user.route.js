@@ -24,10 +24,11 @@ router.post("/", async (req, res) => {
   const {
     email,
     name,
-    uid
+    uid,
+    introduction
   } = req.body
 
-  if(!email || !name || !uid) {
+  if(!email || !name || !uid || !introduction) {
     res.status(400).json({
       ok: false,
       message: "user/lack-parmas"
@@ -36,7 +37,8 @@ router.post("/", async (req, res) => {
     const user = new User({
       email: email,
       name: name,
-      uid, uid
+      uid, uid,
+      introduction: introduction
     })
 
     try {
@@ -54,18 +56,41 @@ router.post("/", async (req, res) => {
   }
 })
 
-/*
-負の遺産より...
-
 router.get("/", async (req, res) => {
   try {
-    const articles = await Article.find()
-    res.json(articles)
+    const users = await User.find()
+    res.json({
+      ok: true,
+      data: users
+    })
   } catch (err) {
-    res.status(500).json({ message: err.message})
+    res.status(500).json({
+      ok: false,
+      message: err.message
+    })
   }
 })
 
-*/
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (user == null) {
+      res.status(404).json({
+        ok: false,
+        message: "user/cannnot-find"
+      })
+    } else {
+      res.status(201).json({
+        ok: true,
+        data: user
+      })
+    }
+  } catch (err) {
+    res.status(500).json({
+      ok: false,
+      message: "server/error"
+    })
+  }
+})
 
 module.exports = router
