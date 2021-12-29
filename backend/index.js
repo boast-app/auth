@@ -1,7 +1,9 @@
+require("dotenv").config()
+
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
-const port = 5001
+const port = process.env.PORT
 const cors = require("cors")
 const path = require('path');
 
@@ -10,7 +12,7 @@ app.use(express.static(path.join(__dirname, '../build')))
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect("mongodb://localhost/boast-app-auth")
+mongoose.connect(process.env.DATABASE_URI)
 const db = mongoose.connection
 db.on("error", (e) => console.log(e))
 db.once("open", () => console.log("Connecting DB"))
