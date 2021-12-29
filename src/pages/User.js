@@ -22,6 +22,9 @@ const User = () => {
       <h2>UserPage</h2>
       <h3>{user.name}</h3>
       <p style={{ whiteSpace: "pre-line"}}>{user.introduction}</p>
+      <div>
+        <p>ID : <span>{user._id}</span> , UID : <span>{user.uid}</span></p>
+      </div>
     </div>
   )
 }
