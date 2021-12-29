@@ -44,6 +44,7 @@ const Register = () => {
         setMessage(errors(err.code))
         setDis(false)
       })
+    navigate("/")
     setDis(false)
   }
 
