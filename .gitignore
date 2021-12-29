@@ -2,3 +2,4 @@ node_modules
 src/plugins/firebase.json
 backend/plugins/firebase_key.json
 build
+.env
